@@ -14,61 +14,72 @@ Notes: The goal of this exercise is to write unit tests for the Game of Life
 """
 
 # import your update_board function here
-from ctypes import sizeof
-from turtle import up
-from ha1_4_gol import update_board
-def boardsize_test_gol() -> None:
-    #test different board sizes and shapes
-    board2 = [
-        [0, 0, 0, 0, 1],
-        [0, 1, 1, 0, 0],
-        [0, 1, 1, 0, 0],
-        [0, 0, 0, 0, 1],
-    ]
-    res1=update_board(board2)
-    assert res1.shape==(4,5)
-def stilllife_test_gol():
-    #test behavior of still lifes
-    board3 = [
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-    ]
-    res2=update_board(board3)
-    assert res2==[
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-    ]
-def oscillators_test_fgol():
-    board4 = [
-        [0, 0, 0, 0],
-        [0, 1, 1, 0],
-        [0, 1, 1, 0],
-        [0, 0, 0, 0],
-    ]
-    res2=update_board(board4)
-    assert res2==[
-        [0, 0, 0, 0],
-        [0, 1, 1, 0],
-        [0, 1, 1, 0],
-        [0, 0, 0, 0],
-    ]
-def spaceship_test_gol():
-    board5 = [
-        [1, 0, 0, 0],
-        [0, 1, 1, 1],
-        [0, 1, 1, 1],
-        [1, 0, 0, 0],
-    ]
-    res3=update_board(board5)
-    assert res3==[
-        [0, 1, 1, 0],
-        [1, 0, 0, 1],
-        [1, 0, 0, 1],
-        [0, 1, 1, 0],
-    ]
+import unittest
+from ha1_4_gol import *
 
 
+class TestLifeGame(unittest.TestCase):
+
+    def test_boardsize(self) -> None:
+        # test different board sizes and shapes
+        board2 = [
+            [0, 0, 0, 0, 1],
+            [0, 1, 1, 0, 0],
+            [0, 1, 1, 0, 0],
+            [0, 0, 0, 0, 1],
+        ]
+        update_board(board2)
+        self.assertEqual((len(board2), len(board2[0])), (4, 5))
+
+    def test_stilllife_test(self):
+        # test behavior of still lifes
+        board3 = [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+        ]
+        update_board(board3)
+        expected = [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+        ]
+        self.assertEqual(board3, expected)
+
+    def test_oscillators(self):
+        board4 = [
+            [0, 0, 0, 0],
+            [0, 1, 1, 0],
+            [0, 1, 1, 0],
+            [0, 0, 0, 0],
+        ]
+        update_board(board4)
+        expected = [
+            [0, 0, 0, 0],
+            [0, 1, 1, 0],
+            [0, 1, 1, 0],
+            [0, 0, 0, 0],
+        ]
+        self.assertEqual(board4, expected)
+
+    def test_spaceship(self):
+        board5 = [
+            [1, 0, 0, 0],
+            [0, 1, 1, 1],
+            [0, 1, 1, 1],
+            [1, 0, 0, 0],
+        ]
+        update_board(board5)
+        expected = [
+            [0, 1, 1, 0],
+            [1, 0, 0, 1],
+            [1, 0, 0, 1],
+            [0, 1, 1, 0],
+        ]
+        self.assertEqual(board5, expected)
+
+
+if __name__ == "__main__":
+    unittest.main()
